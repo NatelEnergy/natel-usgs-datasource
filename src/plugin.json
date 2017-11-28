@@ -1,0 +1,36 @@
+{
+  "name": "USGS Water Services",
+  "id": "natel-usgs-datasource",
+  "type": "datasource",
+
+  "metrics": true,
+  "annotations": false,
+
+  "info": {
+    "description": "Read USGS sensor data",
+    "author": {
+      "name": "Natel Energy",
+      "url": "http://www.natelenergy.com/"
+    },
+    "logos": {
+      "small": "img/usgs.svg",
+      "large": "img/usgs.svg"
+    },
+    "links": [
+      {"name": "USGS Water Services", "url": "https://waterservices.usgs.gov/"},
+      {"name": "Find USGS Sites", "url": "https://maps.waterdata.usgs.gov/mapper/"},
+      {"name": "Project Page", "url": "https://github.com/NatelEnergy/grafana-usgs-datasource"},
+      {"name": "Natel Energy", "url": "http://www.natelenergy.com/"}
+    ],
+    "screenshots": [
+      { "name": "Example",  "path": "img/screenshot-site.png" }
+    ],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "3.x.x",
+    "plugins": [ ]
+  }
+}
