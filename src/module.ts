@@ -1,14 +1,17 @@
-import ChangeMyNameDatasource from './datasource';
-import {ChangeMyNameQueryCtrl} from './query_ctrl';
-import {ChangeMyNameConfigCtrl} from './config_ctrl';
+import {USGSDatasource} from './datasource';
+import {USGSDatasourceQueryCtrl} from './query_ctrl';
 
-class ChangeMyNameAnnotationsQueryCtrl {
-  static templateUrl = 'partials/annotations.editor.html';
+class USGSConfigCtrl {
+  templateUrl = 'partials/config.html';
+}
+
+class USGSQueryOptionsCtrl {
+  templateUrl = 'partials/query.options.html';
 }
 
 export {
-  ChangeMyNameDatasource as Datasource,
-  ChangeMyNameQueryCtrl as QueryCtrl,
-  ChangeMyNameConfigCtrl as ConfigCtrl,
-  ChangeMyNameAnnotationsQueryCtrl as AnnotationsQueryCtrl,
+  USGSDatasource as Datasource,
+  USGSDatasourceQueryCtrl as QueryCtrl,
+  USGSConfigCtrl as ConfigCtrl,
+  USGSQueryOptionsCtrl as QueryOptionsCtrl
 };
