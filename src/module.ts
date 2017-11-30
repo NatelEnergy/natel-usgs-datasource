@@ -1,12 +1,12 @@
-import {USGSDatasource} from './datasource';
+import  USGSDatasource from './datasource';
 import {USGSDatasourceQueryCtrl} from './query_ctrl';
 
 class USGSConfigCtrl {
-  templateUrl = 'partials/config.html';
+  static templateUrl = 'partials/config.html';
 }
 
 class USGSQueryOptionsCtrl {
-  templateUrl = 'partials/query.options.html';
+  static templateUrl = 'partials/query.options.html';
 }
 
 export {

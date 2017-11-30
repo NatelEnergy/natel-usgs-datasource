@@ -91,38 +91,42 @@ const TZ_OFFSETS = {
 
 
 
-export class USGSDatasource {
+export default class USGSDatasource {
   id: number;
   name: string;
-  url: string;
+
+  public url: string =  'https://waterservices.usgs.gov/nwis/';
 
   /** @ngInject */
-  constructor(instanceSettings, private $q, private backendSrv, private templateSrv) {
+  constructor(private instanceSettings, private $q, private backendSrv, private templateSrv) {
     this.id = instanceSettings.id;
     this.name = instanceSettings.name;
-
-    // Really just for the display in Plugins Page
-    this.url = 'https://waterservices.usgs.gov/'
   }
   
   query(options) {
-   // console.log( "QUERY", options );
+    // console.log( "QUERY", options );
     let dataIntervalMS = 15*60*1000  * 2;
     let fmt = 'YYYY-MM-DDTHH:mm:00[Z]'; // UTC without seconds
     var isDV = false;
 
+    if(options.targets.length > 1) {
+      return this.$q.reject( { message: 'USGS does not (yet) support multiple targets'} );
+    }
     var target = options.targets[0];
     var args = target.args;
+    if(!args) {
+      let q = new USGSQuery(target);
+      args = target.args;
+    }
     if(!args || !_.has(args, 'sites')) {
-      throw { message: 'Missing USGS Site Selection' };
-//    return this.q.when( { data: [] } );
+      return this.$q.reject( { message: 'Missing USGS Site Selection' });
     }
 
     if(!_.has(args, 'service')) {
       args.service = 'iv';
     }
 
-    var url = 'https://waterservices.usgs.gov/nwis/';
+    var url = this.url;
     if(target.args.service === 'dv' || options.intervalMs > 3000000) {
       url += 'dv/service/?format=rdb';
       dataIntervalMS = 24*60*60*1000;
@@ -192,7 +196,7 @@ export class USGSDatasource {
       idx = line.indexOf(' ', idx+1);
       rdb.site = line.substring(idx+1);
     }
-    console.log( 'READ', rdb.site, asGrafanaSeries );
+    // console.log( 'READ', rdb.site, asGrafanaSeries );
 
     while( i<lines.length && !line.startsWith('# Data provided')) {
       line = lines[++i];
@@ -202,7 +206,6 @@ export class USGSDatasource {
     rdb.siteID = line.substring(idx+1).trim();
 
     line = lines[++i];
-
 
     idx = line.indexOf('Description');
     let headers = line.substring(2,idx).match(/[^ ]+/g);
@@ -303,13 +306,28 @@ export class USGSDatasource {
   }
 
   testDatasource() {
-    return this.backendSrv.datasourceRequest({
-      url: 'https://waterservices.usgs.gov/nwis/iv/?format=json&sites=01646500&parameterCd=00060&siteStatus=all',
-      method: 'GET'
-    }).then(response => {
-      if (response.status === 200) {
-        return { status: "success", message: "Data source is working", title: "Success" };
+    let options = {
+      range: {
+        from: moment().add(-4, 'h')
+      },
+      rangeRaw: {
+        to: 'now'
+      },
+      targets: [{
+        query: "&sites=01646500&service=iv&parameterCd=00010"
+      }]
+    };
+
+    console.log( 'USGS TEST', this );
+    return this.query(options).then( rsp => {
+      return { status: "success", message: "Data source is working", title: "Success" };
+    }).catch( ex => {
+      console.log( "Error Testing USGS", ex);
+      let msg = ex;
+      if(ex.message) {
+        msg = ex.message;
       }
+      return { status: "error", message: msg };
     });
   }
 
@@ -318,6 +336,6 @@ export class USGSDatasource {
   }
 
   metricFindQuery(query: string) {
-    throw new Error("Template Variable Support not implemented yet.");
+    throw new Error("Template Variable Support not implemented yet. (metricFindQuery)");
   }
 }

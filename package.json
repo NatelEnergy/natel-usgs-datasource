@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.74",
-    "grafana-sdk-mocks": "github:grafana/grafana-sdk-mocks",
+    "grafana-sdk-mocks": "github:ryantxu/grafana-sdk-mocks#add_core_module",
     "grunt": "^1.0.1",
     "load-grunt-tasks": "^3.5.2",
     "grunt-contrib-clean": "^1.1.0",

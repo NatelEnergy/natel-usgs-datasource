@@ -1,12 +1,7 @@
 ///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
 
 import _ from "lodash";
-import kbn from 'app/core/utils/kbn';
 
-// var _USGSMVKeys = {
-//   parameterCd: true,
-//   statCd: true,
-// }
 
 export default class USGSQuery {
 

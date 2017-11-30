@@ -17,7 +17,7 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
   constructor(private $scope, private $rootScope, private $injector, private uiSegmentSrv)  {
     super($scope, $injector);
 
-    this.target.query = this.target.query || '&sites=01646500';
+    this.target.query = this.target.query || '&sites=01646500&service=iv';
     this.query = new USGSQuery(this.target);
 
     this.validateArgsAndCheckInfo();

@@ -1,5 +1,10 @@
 
-<div class="gf-form-group">
+<!--
+<pre>{{ ctrl.current | json }}</pre>
+-->
+
+<!-- The URL is set here since the version keeps changing on save! -->
+<div class="gf-form-group" ng-init="ctrl.current.url='https://waterservices.usgs.gov/nwis/';">
   <h3 class="page-heading">Http settings</h3>
   <div class="gf-form-group">
     <div class="gf-form-inline">
@@ -18,5 +23,7 @@
 </div>
 
 
-This Datasource will load from: <a href="https://waterservices.usgs.gov/">https://waterservices.usgs.gov/</a>
+This Datasource will load from:<br/>
+<a href="https://waterservices.usgs.gov/">https://waterservices.usgs.gov/</a>
+<br/><br/>
 
