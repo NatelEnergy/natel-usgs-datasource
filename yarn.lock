@@ -924,9 +924,9 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
-"grafana-sdk-mocks@github:ryantxu/grafana-sdk-mocks#add_core_module":
+"grafana-sdk-mocks@github:grafana/grafana-sdk-mocks":
   version "1.0.0"
-  resolved "https://codeload.github.com/ryantxu/grafana-sdk-mocks/tar.gz/e61812b7a68e8ce6be28945bf14e47262ac6b6df"
+  resolved "https://codeload.github.com/grafana/grafana-sdk-mocks/tar.gz/82d4b132f1ac9761c969c917382d5fb9988ec632"
 
 grunt-cli@~1.2.0:
   version "1.2.0"
