@@ -36,7 +36,6 @@ System.register(['lodash', 'app/plugins/sdk', './css/query-editor.css!', './quer
                     this.query = new query_1.default(this.target);
                     this.validateArgsAndCheckInfo();
                     if (refresh) {
-                        console.log("TODO, reload the query?", this);
                         this.panelCtrl.refresh();
                     }
                 }

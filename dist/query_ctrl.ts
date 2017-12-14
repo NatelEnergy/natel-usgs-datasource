@@ -24,9 +24,7 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
     }
     this.query = new USGSQuery(this.target);
     this.validateArgsAndCheckInfo();
-
     if(refresh) {
-      console.log( "TODO, reload the query?", this );
       this.panelCtrl.refresh();
     }
   }
