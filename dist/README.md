@@ -5,13 +5,13 @@ Load sensor values from: https://waterservices.usgs.gov/
 To use this datadouce, you will need to get a USGS site ID.  You can find a site using their mapper tool:
 https://maps.waterdata.usgs.gov/mapper/
 
-![Mapper](https://raw.githubusercontent.com/NatelEnergy/grafana-usgs-waterservices/master/src/img/screenshot-usgs.png)
+![Mapper](https://raw.githubusercontent.com/NatelEnergy/natel-usgs-datasource/master/src/img/screenshot-usgs.png)
 
 
 
 ### Screenshots
 
-![Alcatraz](https://raw.githubusercontent.com/NatelEnergy/grafana-usgs-waterservices/master/src/img/screenshot-site.png)
+![Alcatraz](https://raw.githubusercontent.com/NatelEnergy/natel-usgs-datasource/master/src/img/screenshot-site.png)
 
 
 
