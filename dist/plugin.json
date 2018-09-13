@@ -19,18 +19,19 @@
     "links": [
       {"name": "USGS Water Services", "url": "https://waterservices.usgs.gov/"},
       {"name": "Find USGS Sites", "url": "https://maps.waterdata.usgs.gov/mapper/"},
-      {"name": "Project Page", "url": "https://github.com/NatelEnergy/grafana-usgs-datasource"},
+      {
+        "name": "Project Page",
+        "url": "https://github.com/NatelEnergy/grafana-usgs-datasource"
+      },
       {"name": "Natel Energy", "url": "http://www.natelenergy.com/"}
     ],
-    "screenshots": [
-      { "name": "Example",  "path": "img/screenshot-site.png" }
-    ],
-    "version": "0.0.1",
-    "updated": "2017-12-14"
+    "screenshots": [{"name": "Example", "path": "img/screenshot-site.png"}],
+    "version": "0.0.2-dev",
+    "updated": "2018-09-13"
   },
 
   "dependencies": {
     "grafanaVersion": "3.x.x",
-    "plugins": [ ]
+    "plugins": []
   }
 }
