@@ -1,20 +1,15 @@
 ///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
 
-import _ from 'lodash';
-import $ from 'jquery';
-
 import coreModule from 'app/core/core_module';
-
 
 export default class FindUSGSSiteModal {
   /** @ngInject */
-  constructor(private $scope, private $rootScope, private $injector, private contextSrv) {
-    
-    console.log( "TODO... find USGS sites with", this );
+  constructor(private $scope) {
+    console.log('TODO... find USGS sites with', this);
   }
 
   onSave() {
-    console.log( "TODO... update the site ID" );
+    console.log('TODO... update the site ID');
     this.dismiss();
   }
 
@@ -33,10 +28,9 @@ export function findUSGSSiteModalDirective() {
     controllerAs: 'ctrl',
     scope: {
       target: '<', // The difference to '=' is that the bound properties are not watched
-      datasource: '<'
-    }
+      datasource: '<',
+    },
   };
 }
-
 
 coreModule.directive('findUsgsSiteModal', findUSGSSiteModalDirective);
