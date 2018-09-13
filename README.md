@@ -1,5 +1,9 @@
 # USGS Water Services in Grafana
 
+[![CircleCI](https://circleci.com/gh/NatelEnergy/natel-usgs-datasource/tree/master.svg?style=svg)](https://circleci.com/gh/NatelEnergy/natel-usgs-datasource/tree/master)
+[![dependencies Status](https://david-dm.org/NatelEnergy/natel-usgs-datasource/status.svg)](https://david-dm.org/NatelEnergy/natel-usgs-datasource)
+[![devDependencies Status](https://david-dm.org/NatelEnergy/natel-usgs-datasource/dev-status.svg)](https://david-dm.org/NatelEnergy/natel-usgs-datasource?type=dev)
+
 Load sensor values from: https://waterservices.usgs.gov/
 
 To use this datadouce, you will need to get a USGS site ID. You can find a site using their mapper tool:
