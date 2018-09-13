@@ -17,7 +17,7 @@ https://maps.waterdata.usgs.gov/mapper/
 
 #### Changelog
 
-##### v0.0.2 (nbot released yet)
+##### v0.0.2 (not released yet)
 
 * Webpack build
 
