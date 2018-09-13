@@ -4,7 +4,7 @@
 -->
 
 <!-- The URL is set here since the version keeps changing on save! -->
-<div class="gf-form-group" ng-init="ctrl.current.url='https://waterservices.usgs.gov/nwis/';">
+<div class="gf-form-group" ng-init="ctrl.current.url='https://nwis.waterservices.usgs.gov/nwis/';">
   <h3 class="page-heading">Http settings</h3>
   <div class="gf-form-group">
     <div class="gf-form-inline">
@@ -19,11 +19,33 @@
         </div>
       </div>
     </div>
+    <div class="gf-form-inline">
+      <div class="gf-form max-width-30">
+        <span class="gf-form-label width-7">Data</span>
+        <span class="gf-form query-keyword pointer" style="padding-left:20px;">
+          <a href="https://nwis.waterservices.usgs.gov/nwis/">https://nwis.waterservices.usgs.gov/nwis/</a>
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 
 
-This Datasource will load from:<br/>
-<a href="https://waterservices.usgs.gov/">https://waterservices.usgs.gov/</a>
-<br/><br/>
+<!-- The URL is set here since the version keeps changing on save! -->
+<div class="gf-form-group">
+  <h3 class="page-heading">Service settings</h3>
+  <div class="gf-form-group">
+    <div class="gf-form-inline">
+      <div class="gf-form max-width-30">
+        <span class="gf-form-label">Max Instantaneous Interval</span>
+        <input class="gf-form-input width-7" placeholder="2h" type="text" ng-model='ctrl.current.jsonData.maxIVinterval'/>
+      </div>
+    </div>
+
+    The <code>iv</code> services will return an error when asked for too much data.  This option
+    automatically switches to the <code>dv</code> service when the query time range is large
+  </div>
+</div>
+
+
 

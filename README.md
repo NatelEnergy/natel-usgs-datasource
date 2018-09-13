@@ -17,8 +17,10 @@ https://maps.waterdata.usgs.gov/mapper/
 
 #### Changelog
 
-##### v0.0.2 (not released yet)
+##### v0.0.2
 
+* Moved service to https://nwis.waterservices.usgs.gov/nwis/ (Avoid 301 & error)
+* Automatically switch from `iv` to `dv` for large queries
 * Webpack build
 
 ##### v0.0.1

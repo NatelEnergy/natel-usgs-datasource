@@ -3,6 +3,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import USGSQuery from './query';
+import kbn from 'app/core/utils/kbn';
 
 // From: https://help.waterdata.usgs.gov/tz
 const _MSPH = 60 * 60 * 1000;
@@ -93,25 +94,36 @@ export default class USGSDatasource {
   id: number;
   name: string;
 
-  public url: string = 'https://waterservices.usgs.gov/nwis/';
+  public url: string = 'https://nwis.waterservices.usgs.gov/nwis/';
+
+  // Switch IV to DV when the interval is large
+  // maxIVinterval:3000000;
+  maxIVinterval = 8000000;
+  //             10800000 3h (gives 403 forbidden)
+  //             21600000 6h (gives 403)
+  //              7200000 2h
 
   /** @ngInject */
   constructor(instanceSettings, private $q, private backendSrv) {
     this.id = instanceSettings.id;
     this.name = instanceSettings.name;
+
+    const jsonData = instanceSettings.jsonData || {};
+
+    this.maxIVinterval = kbn.interval_to_ms(jsonData.jsonData || '2h');
+    console.log('Set max interval to:', this.maxIVinterval);
   }
 
   query(options) {
-    // console.log( "QUERY", options );
-    let dataIntervalMS = 15 * 60 * 1000 * 2;
+    let dataIntervalMS = 15 * 60 * 1000 * 2; // Guess that it is 15min data
     let fmt = 'YYYY-MM-DDTHH:mm:00[Z]'; // UTC without seconds
-    var isDV = false;
+    let isDV = false;
 
     if (options.targets.length > 1) {
       return this.$q.reject({message: 'USGS does not (yet) support multiple targets'});
     }
-    var target = options.targets[0];
-    var args = target.args;
+    let target = options.targets[0];
+    let args = target.args;
     if (!args) {
       const q = new USGSQuery(target);
       args = q.target.args;
@@ -124,8 +136,9 @@ export default class USGSDatasource {
       args.service = 'iv';
     }
 
-    var url = this.url;
-    if (target.args.service === 'dv' || options.intervalMs > 3000000) {
+    let url = this.url;
+    const tooBigForIV = options.intervalMs > this.maxIVinterval;
+    if (target.args.service === 'dv' || tooBigForIV) {
       url += 'dv/service/?format=rdb';
       dataIntervalMS = 24 * 60 * 60 * 1000;
       fmt = 'YYYY-MM-DD';
@@ -157,26 +170,24 @@ export default class USGSDatasource {
         method: 'GET',
       })
       .then(result => {
-        var lines = result.data.split('\n');
-        var info = this.readRDB(lines, true, args.show);
-
-        // console.log( "TO Timeseries", info );
-
-        var res: any = {data: []};
-        _.forEach(info.series, series => {
-          res.data.push(series);
-        });
-        return res;
+        const lines = result.data.split('\n');
+        const info = this.readRDB(lines, true, args.show, tooBigForIV);
+        return {data: info.series};
       });
   }
 
-  readRDB(lines, asGrafanaSeries, show) {
-    var rdb: any = {};
+  readRDB(
+    lines: string[],
+    asGrafanaSeries: boolean,
+    show: Map<string, String>,
+    findBestMatch = false
+  ) {
+    const rdb: any = {};
     rdb.series = [];
 
     let idx = 0;
-    var i = 1;
-    var line = lines[i];
+    let i = 1;
+    let line = lines[i];
     while (i < lines.length && !line.startsWith('# Data for')) {
       line = lines[++i];
     }
@@ -206,14 +217,23 @@ export default class USGSDatasource {
     line = lines[++i];
 
     idx = line.indexOf('Description');
-    let headers = line.substring(2, idx).match(/[^ ]+/g);
+    let headers: string[] | null = line.substring(2, idx).match(/[^ ]+/g);
+    if (headers == null) {
+      return;
+    }
 
     line = lines[++i];
-    var idToField = {};
+    const skipped: any[] = [];
+    const shown: string[] = [];
+    let idToField = new Map<string, any>();
     while (i < lines.length && line.startsWith('#  ')) {
-      var vals = line.substring(2, idx).match(/[^ ]+/g);
-      var s: any = {};
-      for (var j = 0; j < headers.length; j++) {
+      let vals: string[] | null = line.substring(2, idx).match(/[^ ]+/g);
+      if (vals == null) {
+        continue;
+      }
+
+      let s: any = {};
+      for (let j = 0; j < headers.length; j++) {
         s[headers[j]] = vals[j];
       }
       s.Description = line.substring(idx).trim();
@@ -234,16 +254,56 @@ export default class USGSDatasource {
         if (show != null) {
           alias = show[s.key];
         }
-        if (!alias || alias.length == 0) {
-          s.target = s.Description;
-        } else {
-          s.target = alias;
-        }
-        idToField[s.key] = s;
         rdb.series.push(s);
+        shown.push(s.key);
+        s.include = true;
+      } else {
+        skipped.push(s);
       }
 
+      // Update the target
+      if (!alias || alias.length == 0) {
+        s.target = s.Description;
+      } else {
+        s.target = alias;
+      }
+
+      idToField[s.key] = s;
       line = lines[++i];
+    }
+
+    // When we skipped some fields, lets maks sure 'show' got what it wanted
+    if (false) {
+      //findBestMatch && skipped.length>0) {
+      const keys = _.keys(show);
+      _.pull(keys, shown);
+      _.forEach(keys, k => {
+        const param = k.split('_')[1];
+        if (param) {
+          const byStats = new Map<String, any>();
+          _.forEach(skipped, v => {
+            if (param === v.Parameter && v.Statistic) {
+              byStats.set(v.Statistic, v);
+            }
+          });
+
+          // Use mean, or the first other thing we have
+          let use = byStats['00003'];
+          if (!use) {
+            use = byStats.entries().next().value;
+          }
+
+          if (use) {
+            let alias = show[k];
+            if (alias) {
+              use.target = alias;
+            }
+            rdb.series.push(use);
+            use.shown = true;
+            console.log('replace', k, 'with', use);
+          }
+        }
+      });
     }
 
     // Read to the end of the header
@@ -251,14 +311,16 @@ export default class USGSDatasource {
       line = lines[++i];
     }
 
-    var parts = line.split('\t');
-    for (var j = 0; j < parts.length; j++) {
+    let parts: string[] = line.split('\t');
+    for (let j = 0; j < parts.length; j++) {
       if (_.has(idToField, parts[j])) {
         idToField[parts[j]].index = j;
+      } else {
+        console.log('Missing index', j, parts[j]);
       }
     }
     rdb.dates = [];
-    var hasTZ = 'tz_cd' === parts[3];
+    let hasTZ = 'tz_cd' === parts[3];
 
     i++;
     i++; // skip the line about size
@@ -270,7 +332,7 @@ export default class USGSDatasource {
         // agency = parts[0];
         // site = parts[0];
         let date = parts[2];
-        var d = 0;
+        let d = 0;
         if (hasTZ) {
           let tz = parts[3];
           let off = TZ_OFFSETS[tz];
@@ -280,9 +342,9 @@ export default class USGSDatasource {
         }
         rdb.dates.push(d);
 
-        for (var j = 0; j < rdb.series.length; j++) {
-          var s = rdb.series[j];
-          var val = parts[s.index];
+        for (let j = 0; j < rdb.series.length; j++) {
+          let s = rdb.series[j];
+          let val: any = parts[s.index];
           if (val && val.length > 0) {
             val = parseFloat(val);
           } else {
