@@ -9,7 +9,6 @@
     "dev": "webpack --mode development",
     "watch": "webpack --mode development --watch",
     "test": "jest --config jest.config.js",
-    "precommit": "lint-staged yarn",
     "pretty": "prettier --write src/**/*.{js,ts,json,css,md}",
     "release": "node release.js"
   },
@@ -53,5 +52,10 @@
     "typescript": "^2.8.3",
     "webpack": "^4.9.1",
     "webpack-cli": "^2.1.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged yarn"
+    }
   }
 }
