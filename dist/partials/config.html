@@ -1,0 +1,53 @@
+
+<!--
+<pre>{{ ctrl.current | json }}</pre>
+-->
+
+<!-- The URL is set here since the version keeps changing on save! -->
+<div class="gf-form-group" ng-init="ctrl.current.url='https://nwis.waterservices.usgs.gov/nwis/';">
+  <h3 class="page-heading">Http settings</h3>
+  <div class="gf-form-group">
+    <div class="gf-form-inline">
+      <div class="gf-form max-width-30">
+        <span class="gf-form-label width-7">Access</span>
+        <div class="gf-form-select-wrapper gf-form-select-wrapper--has-help-icon max-width-24">
+          <select class="gf-form-input" ng-model="ctrl.current.access" ng-options="f for f in ['direct', 'proxy']"></select>
+          <info-popover mode="right-absolute">
+            Direct = url is used directly from browser<br>
+            Proxy = Grafana backend will proxy the request
+          </info-popover>
+        </div>
+      </div>
+    </div>
+    <div class="gf-form-inline">
+      <div class="gf-form max-width-30">
+        <span class="gf-form-label width-7">URL</span>
+        <span class="gf-form query-keyword pointer" style="padding-left:20px;">
+          <a href="https://nwis.waterservices.usgs.gov/nwis/">https://nwis.waterservices.usgs.gov/nwis/</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- The URL is set here since the version keeps changing on save! -->
+<div class="gf-form-group">
+  <h3 class="page-heading">Service settings</h3>
+  <div class="gf-form-group">
+    <div class="gf-form-inline">
+      <div class="gf-form max-width-30">
+        <span class="gf-form-label">Use Daily Values (dv) service when interval is greater than:</span>
+        <input class="gf-form-input width-7" placeholder="3h" type="text" ng-model='ctrl.current.jsonData.maxIVinterval'/>
+      </div>
+    </div>
+
+    <div class="grafana-info-box">
+      The <code>iv</code> services will return an error when asked for too much data.  This option
+      automatically switches to the <code>dv</code> service when the query time range is large
+    </div>
+  </div>
+</div>
+
+
+

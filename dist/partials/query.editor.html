@@ -1,0 +1,49 @@
+<query-editor-row query-ctrl="ctrl" class="generic-datasource-query-row" has-text-edit-mode="true">
+  <div class="gf-form" ng-if="ctrl.target.rawQuery">
+    <input type="text" class="gf-form-input" ng-model="ctrl.target.query" spellcheck="false" ng-blur="ctrl.onChangeInternal()" />
+  </div>
+
+  <div ng-if="!ctrl.target.rawQuery">
+    <div class="gf-form-inline" >
+      <div class="gf-form">
+        <label class="gf-form-label query-keyword width-6">SERVICE:</label>
+        <div class="gf-form-select-wrapper max-width-14">
+          <select class="gf-form-input" ng-model="ctrl.target.args.service" ng-change="ctrl.onChangeInternal()">
+            <option value="iv">Instantaneous</option>
+            <option value="dv">Daily Values</option>
+          </select>
+        </div>
+      </div>
+      <div class="gf-form">
+        <label class="gf-form-label query-keyword width-6">SITE:</label>
+        <input type="text" class="gf-form-input width-12" ng-model="ctrl.target.args.sites" spellcheck='false' ng-blur="ctrl.onChangeInternal()"  placeholder="USGS Site ID"/>
+      </div>
+      <div class="gf-form gf-form--grow">
+        <div class="gf-form-label gf-form-label--grow">
+          <button class="btn btn-inverse btn-small" style="margin-top:-1.2em; margin-bottom:-0.9em; margin-left:-.5em;" ng-click="ctrl.doSitePopup();"><i class="fa fa-search"></i></button>
+           &nbsp;
+           <a target="usgs" ng-href="https://waterdata.usgs.gov/nwis/inventory?site_no={{ctrl.target.args.sites}}">
+
+           {{ ctrl.info.site }}
+           &nbsp;&nbsp;
+
+           <i class="fa fa-external-link"></i></a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="gf-form" ng-repeat="series in ctrl.info.series">
+      <div class="gf-form-label gf-form-label--grow">
+        <a href="#" ng-click="ctrl.toggleSeries(series)">
+          <i ng-class="ctrl.isSelected(series) ? 'fa fa-check-square-o' : 'fa fa-square-o'"></i> &nbsp;
+          {{ series.Description }}
+        </a>
+      </div>
+      <div class="gf-form" ng-if="ctrl.isSelected(series)">
+        <label class="gf-form-label query-keyword width-3">AS:</label>
+        <input type="text" class="gf-form-input width-15" ng-model="ctrl.target.args.show[series.key]" spellcheck="false" ng-blur="ctrl.onChangeInternal()" placeholder="{{ series.Description }}" />
+      </div>
+    </div>
+  </div>
+</query-editor-row>
