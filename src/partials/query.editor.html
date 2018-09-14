@@ -22,7 +22,7 @@
         <div class="gf-form-label gf-form-label--grow">
           <button class="btn btn-inverse btn-small" style="margin-top:-1.2em; margin-bottom:-0.9em; margin-left:-.5em;" ng-click="ctrl.doSitePopup();"><i class="fa fa-search"></i></button>
            &nbsp;
-           <a href="https://waterdata.usgs.gov/nwis/inventory?site_no={{ctrl.target.args.sites.join()}}">
+           <a target="usgs" ng-href="https://waterdata.usgs.gov/nwis/inventory?site_no={{ctrl.target.args.sites}}">
 
            {{ ctrl.info.site }}
            &nbsp;&nbsp;

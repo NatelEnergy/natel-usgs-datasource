@@ -21,6 +21,7 @@ https://maps.waterdata.usgs.gov/mapper/
 
 * Moved service to https://nwis.waterservices.usgs.gov/nwis/ (Avoid 301 & error)
 * Automatically switch from `iv` to `dv` for large queries
+* Fix external site link in query builder
 * Webpack build
 
 ##### v0.0.1
