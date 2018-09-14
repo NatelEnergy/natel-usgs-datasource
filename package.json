@@ -10,7 +10,7 @@
     "watch": "webpack --mode development --watch",
     "test": "jest --config jest.config.js",
     "precommit": "lint-staged yarn",
-    "pretty": "prettier --write src/**/*.ts",
+    "pretty": "prettier --write src/**/*.{js,ts,json,css,md}",
     "release": "node release.js"
   },
   "lint-staged": {
