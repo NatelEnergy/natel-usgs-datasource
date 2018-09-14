@@ -225,7 +225,7 @@ export default class USGSDatasource {
     line = lines[++i];
     const skipped: any[] = [];
     const shown: string[] = [];
-    let idToField = new Map<string, any>();
+    const idToField = new Map<string, any>();
     while (i < lines.length && line.startsWith('#  ')) {
       let vals: string[] | null = line.substring(2, idx).match(/[^ ]+/g);
       if (vals == null) {
@@ -256,7 +256,6 @@ export default class USGSDatasource {
         }
         rdb.series.push(s);
         shown.push(s.key);
-        s.include = true;
       } else {
         skipped.push(s);
       }
@@ -268,13 +267,12 @@ export default class USGSDatasource {
         s.target = alias;
       }
 
-      idToField[s.key] = s;
+      idToField.set(s.key, s);
       line = lines[++i];
     }
 
     // When we skipped some fields, lets maks sure 'show' got what it wanted
-    if (false) {
-      //findBestMatch && skipped.length>0) {
+    if (findBestMatch && skipped.length > 0) {
       const keys = _.keys(show);
       _.pull(keys, shown);
       _.forEach(keys, k => {
@@ -288,7 +286,7 @@ export default class USGSDatasource {
           });
 
           // Use mean, or the first other thing we have
-          let use = byStats['00003'];
+          let use = byStats.get('00003');
           if (!use) {
             use = byStats.entries().next().value;
           }
@@ -299,9 +297,12 @@ export default class USGSDatasource {
               use.target = alias;
             }
             rdb.series.push(use);
-            use.shown = true;
             console.log('replace', k, 'with', use);
+          } else {
+            console.log('could not find field to use for', k, keys);
           }
+        } else {
+          console.warn('Did not find parameter for skipped field', k);
         }
       });
     }
@@ -313,10 +314,8 @@ export default class USGSDatasource {
 
     let parts: string[] = line.split('\t');
     for (let j = 0; j < parts.length; j++) {
-      if (_.has(idToField, parts[j])) {
-        idToField[parts[j]].index = j;
-      } else {
-        console.log('Missing index', j, parts[j]);
+      if (idToField.has(parts[j])) {
+        idToField.get(parts[j]).index = j;
       }
     }
     rdb.dates = [];
@@ -351,6 +350,11 @@ export default class USGSDatasource {
             val = null;
           }
           if (asGrafanaSeries) {
+            if (!s.datapoints) {
+              console.log('MISSING points', s);
+              s.datapoints = [];
+            }
+
             s.datapoints.push([val, d]);
           } else {
             s.values.push(val);

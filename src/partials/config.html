@@ -21,7 +21,7 @@
     </div>
     <div class="gf-form-inline">
       <div class="gf-form max-width-30">
-        <span class="gf-form-label width-7">Data</span>
+        <span class="gf-form-label width-7">URL</span>
         <span class="gf-form query-keyword pointer" style="padding-left:20px;">
           <a href="https://nwis.waterservices.usgs.gov/nwis/">https://nwis.waterservices.usgs.gov/nwis/</a>
         </span>
@@ -37,13 +37,15 @@
   <div class="gf-form-group">
     <div class="gf-form-inline">
       <div class="gf-form max-width-30">
-        <span class="gf-form-label">Max Instantaneous Interval</span>
+        <span class="gf-form-label">Use Daily Values (dv) service when interval is greater than:</span>
         <input class="gf-form-input width-7" placeholder="2h" type="text" ng-model='ctrl.current.jsonData.maxIVinterval'/>
       </div>
     </div>
 
-    The <code>iv</code> services will return an error when asked for too much data.  This option
-    automatically switches to the <code>dv</code> service when the query time range is large
+    <div class="grafana-info-box">
+      The <code>iv</code> services will return an error when asked for too much data.  This option
+      automatically switches to the <code>dv</code> service when the query time range is large
+    </div>
   </div>
 </div>
 
