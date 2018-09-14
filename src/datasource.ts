@@ -110,8 +110,8 @@ export default class USGSDatasource {
 
     const jsonData = instanceSettings.jsonData || {};
 
-    this.maxIVinterval = kbn.interval_to_ms(jsonData.jsonData || '2h');
-    console.log('Set max interval to:', this.maxIVinterval);
+    this.maxIVinterval = kbn.interval_to_ms(jsonData.jsonData || '3h');
+    //console.log('Set max interval to:', this.maxIVinterval);
   }
 
   query(options) {
@@ -217,7 +217,7 @@ export default class USGSDatasource {
     line = lines[++i];
 
     idx = line.indexOf('Description');
-    let headers: string[] | null = line.substring(2, idx).match(/[^ ]+/g);
+    const headers: string[] | null = line.substring(2, idx).match(/[^ ]+/g);
     if (headers == null) {
       return;
     }
@@ -227,12 +227,12 @@ export default class USGSDatasource {
     const shown: string[] = [];
     const idToField = new Map<string, any>();
     while (i < lines.length && line.startsWith('#  ')) {
-      let vals: string[] | null = line.substring(2, idx).match(/[^ ]+/g);
+      const vals: string[] | null = line.substring(2, idx).match(/[^ ]+/g);
       if (vals == null) {
         continue;
       }
 
-      let s: any = {};
+      const s: any = {};
       for (let j = 0; j < headers.length; j++) {
         s[headers[j]] = vals[j];
       }
@@ -286,9 +286,13 @@ export default class USGSDatasource {
           });
 
           // Use mean, or the first other thing we have
-          let use = byStats.get('00003');
+          let use = byStats.get('00003'); // MEAN
           if (!use) {
-            use = byStats.entries().next().value;
+            use = byStats.get('00001'); // MAX
+            if (!use) {
+              const first = byStats.keys().next().value as string;
+              use = byStats.get(first);
+            }
           }
 
           if (use) {
@@ -342,7 +346,7 @@ export default class USGSDatasource {
         rdb.dates.push(d);
 
         for (let j = 0; j < rdb.series.length; j++) {
-          let s = rdb.series[j];
+          const s = rdb.series[j];
           let val: any = parts[s.index];
           if (val && val.length > 0) {
             val = parseFloat(val);
@@ -350,11 +354,6 @@ export default class USGSDatasource {
             val = null;
           }
           if (asGrafanaSeries) {
-            if (!s.datapoints) {
-              console.log('MISSING points', s);
-              s.datapoints = [];
-            }
-
             s.datapoints.push([val, d]);
           } else {
             s.values.push(val);
