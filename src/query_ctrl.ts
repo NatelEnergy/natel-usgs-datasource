@@ -1,7 +1,5 @@
-///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
-
 import _ from 'lodash';
-import {QueryCtrl} from 'app/plugins/sdk';
+import {QueryCtrl} from 'grafana/app/plugins/sdk';
 import './css/query-editor.css';
 
 import USGSQuery from './query';
@@ -10,11 +8,11 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
   static templateUrl = 'partials/query.editor.html';
 
   query: USGSQuery;
-  key: string;
   info: any;
+  key = '';
 
   /** @ngInject */
-  constructor(private $scope, private $rootScope, public $injector, public uiSegmentSrv) {
+  constructor(public $scope, public $rootScope, $injector, public uiSegmentSrv) {
     super($scope, $injector);
 
     let refresh = false;
@@ -30,7 +28,7 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
   }
 
   doSitePopup() {
-    var scope = this.$scope.$new(true);
+    const scope = this.$scope.$new(true);
     scope.target = this.target;
     scope.datasource = this.datasource;
     this.$rootScope.appEvent('show-modal', {
@@ -41,7 +39,7 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
   }
 
   toggleSeries(series) {
-    var show = this.target.args.show;
+    let show = this.target.args.show;
     if (this.isSelected(series)) {
       _.unset(show, series.key);
     } else {
@@ -70,9 +68,9 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
     this.validateArgsAndCheckInfo(true);
   }
 
-  validateArgsAndCheckInfo(doRefresh: boolean = false) {
+  validateArgsAndCheckInfo(doRefresh = false) {
     // Pick the params and Stats from the keys
-    var args = this.target.args;
+    const args = this.target.args;
 
     // Just in case
     _.unset(args, 'parameterCd');
@@ -82,9 +80,9 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
     if (args.show) {
       if (_.size(args.show) > 0) {
         _.forEach(args.show, (v, k) => {
-          var ids = k.split('_');
+          const ids = k.split('_');
           if (ids.length > 1) {
-            var val = ids[1];
+            const val = ids[1];
             if (args.parameterCd == null) {
               args.parameterCd = [val];
             } else if (!_.includes(args.parameterCd, val)) {
@@ -92,7 +90,7 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
             }
           }
           if (ids.length > 2) {
-            var val = ids[2];
+            const val = ids[2];
             if (args.statCd == null) {
               args.statCd = [val];
             } else if (!_.includes(args.statCd, val)) {
@@ -105,10 +103,10 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
       }
     }
 
-    var key = args.service + '@' + args.sites;
-    if (this.key != key) {
+    const key = args.service + '@' + args.sites;
+    if (this.key !== key) {
       this.key = key;
-      var url =
+      const url =
         'https://waterservices.usgs.gov/nwis/' +
         args.service +
         '/service/?format=rdb&sites=' +
@@ -119,12 +117,12 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
           method: 'GET',
         })
         .then(result => {
-          var lines = result.data.split('\n');
+          const lines = result.data.split('\n');
           this.info = this.datasource.readRDB(lines, false, null);
 
           // Make sure the values exist
           if (args.show) {
-            var clean = {};
+            const clean = {};
             _.forEach(args.show, (v, k) => {
               _.forEach(this.info.series, s => {
                 if (k === s.key) {

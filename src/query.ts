@@ -1,5 +1,3 @@
-///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
-
 import _ from 'lodash';
 
 export default class USGSQuery {
@@ -10,11 +8,11 @@ export default class USGSQuery {
   }
 
   parse(query) {
-    var args = {};
+    const args = {};
     if (query) {
       _.forEach(query.split('&'), s => {
-        let idx = s.indexOf('=');
-        let k = s.substring(0, idx);
+        const idx = s.indexOf('=');
+        const k = s.substring(0, idx);
         let v = s.substring(idx + 1);
 
         if (k.length > 0 && v.length > 0) {
@@ -23,7 +21,7 @@ export default class USGSQuery {
             k === 'statCd' ||
             k === 'tsid' ||
             k === 'sites' ||
-            k == 'keys'
+            k === 'keys'
           ) {
             v = v.split(',');
           }
@@ -36,9 +34,9 @@ export default class USGSQuery {
   }
 
   argsToQueryString(args) {
-    var spec = '';
+    let spec = '';
     _.forEach(args, (v, k) => {
-      if (v != null && v.length > 0) {
+      if (v !== null && v.length > 0) {
         spec += '&' + k + '=';
         if (_.isArray(v)) {
           spec += v.join();
