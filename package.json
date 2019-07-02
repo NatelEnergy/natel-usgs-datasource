@@ -12,22 +12,8 @@
     "test:badges": "yarn test:coverage && jest-coverage-badges"
   },
   "devDependencies": {
-    "@types/grafana": "github:CorpGlory/types-grafana.git",
     "@grafana/ui": "next",
-    "@types/jest": "^24.0.13",
-    "@types/lodash": "4.14.132",
-    "jest": "^24.8.0",
-    "lodash": "4.17.11",
-    "css-loader": "^1.0.0",
-    "style-loader": "^0.22",
-    "ts-jest": "^24.0.2",
-    "tslib": "^1.10.0",
-    "typescript": "^3.5.2"
-  },
-  "dependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "babel-loader": "^8.0.6",
-    "ts-loader": "^6.0.4"
+    "@grafana/toolkit": "next",
+    "@types/grafana": "github:CorpGlory/types-grafana.git"
   }
 }
