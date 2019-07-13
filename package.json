@@ -7,12 +7,10 @@
   "scripts": {
     "build": "grafana-toolkit plugin:build",
     "test": "grafana-toolkit plugin:test",
-    "dev": "grafana-toolkit plugin:dev",
-    "test:coverage": "yarn test --coverage",
-    "test:badges": "yarn test:coverage && jest-coverage-badges"
+    "dev": "grafana-toolkit plugin:dev"
   },
   "devDependencies": {
-    "@grafana/ui": "next",
+    "@grafana/ui": "latest",
     "@grafana/toolkit": "next",
     "@types/grafana": "github:CorpGlory/types-grafana.git"
   }
