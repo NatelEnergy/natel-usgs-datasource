@@ -1,9 +1,7 @@
-///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
-
 import _ from 'lodash';
 import moment from 'moment';
 import USGSQuery from './query';
-import kbn from 'app/core/utils/kbn';
+import kbn from 'grafana/app/core/utils/kbn';
 
 // From: https://help.waterdata.usgs.gov/tz
 const _MSPH = 60 * 60 * 1000;
@@ -94,7 +92,7 @@ export default class USGSDatasource {
   id: number;
   name: string;
 
-  public url: string = 'https://nwis.waterservices.usgs.gov/nwis/';
+  url = 'https://nwis.waterservices.usgs.gov/nwis/';
 
   // Switch IV to DV when the interval is large
   // maxIVinterval:3000000;
@@ -122,7 +120,7 @@ export default class USGSDatasource {
     if (options.targets.length > 1) {
       return this.$q.reject({message: 'USGS does not (yet) support multiple targets'});
     }
-    let target = options.targets[0];
+    const target = options.targets[0];
     let args = target.args;
     if (!args) {
       const q = new USGSQuery(target);
@@ -147,10 +145,10 @@ export default class USGSDatasource {
       url += 'iv/service/?format=rdb';
     }
 
-    let from = options.range.from.subtract(dataIntervalMS, 'ms');
+    const from = options.range.from.subtract(dataIntervalMS, 'ms');
     url += '&startDT=' + from.utc().format(fmt);
-    if ('now' != options.rangeRaw.to) {
-      let to = options.range.to.add(dataIntervalMS + 6000, 'ms');
+    if ('now' !== options.rangeRaw.to) {
+      const to = options.range.to.add(dataIntervalMS + 6000, 'ms');
       url += '&endDT=' + to.utc().format(fmt);
     }
 
@@ -179,7 +177,7 @@ export default class USGSDatasource {
   readRDB(
     lines: string[],
     asGrafanaSeries: boolean,
-    show: Map<string, String>,
+    show: Map<string, string>,
     findBestMatch = false
   ) {
     const rdb: any = {};
@@ -261,7 +259,7 @@ export default class USGSDatasource {
       }
 
       // Update the target
-      if (!alias || alias.length == 0) {
+      if (!alias || alias.length === 0) {
         s.target = s.Description;
       } else {
         s.target = alias;
@@ -274,11 +272,11 @@ export default class USGSDatasource {
     // When we skipped some fields, lets maks sure 'show' got what it wanted
     if (findBestMatch && skipped.length > 0) {
       const keys = _.keys(show);
-      _.pull(keys, shown);
+      _.pull(keys, ...shown);
       _.forEach(keys, k => {
         const param = k.split('_')[1];
         if (param) {
-          const byStats = new Map<String, any>();
+          const byStats = new Map<string, any>();
           _.forEach(skipped, v => {
             if (param === v.Parameter && v.Statistic) {
               byStats.set(v.Statistic, v);
@@ -296,7 +294,7 @@ export default class USGSDatasource {
           }
 
           if (use) {
-            let alias = show[k];
+            const alias = show[k];
             if (alias) {
               use.target = alias;
             }
@@ -323,7 +321,7 @@ export default class USGSDatasource {
       }
     }
     rdb.dates = [];
-    let hasTZ = 'tz_cd' === parts[3];
+    const hasTZ = 'tz_cd' === parts[3];
 
     i++;
     i++; // skip the line about size
@@ -334,11 +332,11 @@ export default class USGSDatasource {
 
         // agency = parts[0];
         // site = parts[0];
-        let date = parts[2];
+        const date = parts[2];
         let d = 0;
         if (hasTZ) {
-          let tz = parts[3];
-          let off = TZ_OFFSETS[tz];
+          const tz = parts[3];
+          const off = TZ_OFFSETS[tz];
           d = moment.utc(date).valueOf() - off;
         } else {
           d = moment(date).valueOf(); // local time/  TODO, should be in the TZ of the site
@@ -365,7 +363,7 @@ export default class USGSDatasource {
   }
 
   testDatasource() {
-    let options = {
+    const options = {
       range: {
         from: moment().add(-4, 'h'),
       },

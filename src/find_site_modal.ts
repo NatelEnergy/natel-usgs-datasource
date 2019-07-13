@@ -1,6 +1,4 @@
-///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
-
-import coreModule from 'app/core/core_module';
+import coreModule from 'grafana/app/core/core_module';
 
 export default class FindUSGSSiteModal {
   /** @ngInject */
