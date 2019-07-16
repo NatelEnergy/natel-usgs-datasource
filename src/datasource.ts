@@ -118,7 +118,7 @@ export default class USGSDatasource {
     let isDV = false;
 
     if (options.targets.length > 1) {
-      return this.$q.reject({message: 'USGS does not (yet) support multiple targets'});
+      return this.$q.reject({ message: 'USGS does not (yet) support multiple targets' });
     }
     const target = options.targets[0];
     let args = target.args;
@@ -127,7 +127,7 @@ export default class USGSDatasource {
       args = q.target.args;
     }
     if (!args || !_.has(args, 'sites')) {
-      return this.$q.reject({message: 'Missing USGS Site Selection'});
+      return this.$q.reject({ message: 'Missing USGS Site Selection' });
     }
 
     if (!_.has(args, 'service')) {
@@ -170,16 +170,11 @@ export default class USGSDatasource {
       .then(result => {
         const lines = result.data.split('\n');
         const info = this.readRDB(lines, true, args.show, tooBigForIV);
-        return {data: info.series};
+        return { data: info.series };
       });
   }
 
-  readRDB(
-    lines: string[],
-    asGrafanaSeries: boolean,
-    show: Map<string, string>,
-    findBestMatch = false
-  ) {
+  readRDB(lines: string[], asGrafanaSeries: boolean, show: Map<string, string>, findBestMatch = false) {
     const rdb: any = {};
     rdb.series = [];
 
@@ -380,7 +375,7 @@ export default class USGSDatasource {
     console.log('USGS TEST', this);
     return this.query(options)
       .then(rsp => {
-        return {status: 'success', message: 'Data source is working', title: 'Success'};
+        return { status: 'success', message: 'Data source is working', title: 'Success' };
       })
       .catch(ex => {
         console.log('Error Testing USGS', ex);
@@ -388,7 +383,7 @@ export default class USGSDatasource {
         if (ex.message) {
           msg = ex.message;
         }
-        return {status: 'error', message: msg};
+        return { status: 'error', message: msg };
       });
   }
 
