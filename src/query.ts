@@ -16,13 +16,7 @@ export default class USGSQuery {
         let v = s.substring(idx + 1);
 
         if (k.length > 0 && v.length > 0) {
-          if (
-            k === 'parameterCd' ||
-            k === 'statCd' ||
-            k === 'tsid' ||
-            k === 'sites' ||
-            k === 'keys'
-          ) {
+          if (k === 'parameterCd' || k === 'statCd' || k === 'tsid' || k === 'sites' || k === 'keys') {
             v = v.split(',');
           }
 

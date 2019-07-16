@@ -1,5 +1,5 @@
 import USGSDatasource from './datasource';
-import {USGSDatasourceQueryCtrl} from './query_ctrl';
+import { USGSDatasourceQueryCtrl } from './query_ctrl';
 
 // Exports the modal window
 import './find_site_modal';
@@ -12,9 +12,4 @@ class USGSQueryOptionsCtrl {
   static templateUrl = 'partials/query.options.html';
 }
 
-export {
-  USGSDatasource as Datasource,
-  USGSDatasourceQueryCtrl as QueryCtrl,
-  USGSConfigCtrl as ConfigCtrl,
-  USGSQueryOptionsCtrl as QueryOptionsCtrl,
-};
+export { USGSDatasource as Datasource, USGSDatasourceQueryCtrl as QueryCtrl, USGSConfigCtrl as ConfigCtrl, USGSQueryOptionsCtrl as QueryOptionsCtrl };

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {QueryCtrl} from 'grafana/app/plugins/sdk';
+import { QueryCtrl } from 'grafana/app/plugins/sdk';
 import './css/query-editor.css';
 
 import USGSQuery from './query';
@@ -32,8 +32,7 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
     scope.target = this.target;
     scope.datasource = this.datasource;
     this.$rootScope.appEvent('show-modal', {
-      templateHtml:
-        '<find-usgs-site-modal target="target" datasource="datasource"></find-usgs-site-modal>',
+      templateHtml: '<find-usgs-site-modal target="target" datasource="datasource"></find-usgs-site-modal>',
       scope,
     });
   }
@@ -106,11 +105,7 @@ export class USGSDatasourceQueryCtrl extends QueryCtrl {
     const key = args.service + '@' + args.sites;
     if (this.key !== key) {
       this.key = key;
-      const url =
-        'https://waterservices.usgs.gov/nwis/' +
-        args.service +
-        '/service/?format=rdb&sites=' +
-        args.sites;
+      const url = 'https://waterservices.usgs.gov/nwis/' + args.service + '/service/?format=rdb&sites=' + args.sites;
       return this.datasource.backendSrv
         .datasourceRequest({
           url: url,
