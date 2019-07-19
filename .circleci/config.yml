@@ -163,6 +163,10 @@ jobs:
           root: .
           paths:
             - ci/jobs/test_master
+      - store_test_results:
+          path: ci/jobs/test_master
+      - store_artifacts:
+          path: ci/jobs/test_master
 
   test_latest:
     docker:
@@ -199,6 +203,10 @@ jobs:
           root: .
           paths:
             - ci/jobs/test_latest
+      - store_test_results:
+          path: ci/jobs/test_latest
+      - store_artifacts:
+          path: ci/jobs/test_latest
 
   report:
     docker:
