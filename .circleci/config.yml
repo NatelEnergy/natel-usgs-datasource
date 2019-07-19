@@ -128,7 +128,7 @@ jobs:
             - ci/dist
             - ci/grafana-test-env
 
-  test_master:
+  test_6.2.5:
     docker:
       - image: circleci/node:10-browsers
     working_directory: ~/plugin
@@ -162,13 +162,13 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ci/jobs/test_master
+            - ci/jobs/test_6.2.5
       - store_test_results:
-          path: ci/jobs/test_master
+          path: ci/jobs/test_6.2.5
       - store_artifacts:
-          path: ci/jobs/test_master
+          path: ci/jobs/test_6.2.5
 
-  test_latest:
+  test_6.3.0-beta1:
     docker:
       - image: circleci/node:10-browsers
     working_directory: ~/plugin
@@ -237,7 +237,7 @@ workflows:
             - build_plugin
             - build_osx
             - build_win64
-      - test_master:
+      - test_6.2.5:
           requires:
             - package
       - test_latest:
@@ -245,5 +245,5 @@ workflows:
             - package
       - report:
           requires:
-            - test_master
+            - test_6.2.5
             - test_latest
