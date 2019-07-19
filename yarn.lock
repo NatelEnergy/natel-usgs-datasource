@@ -716,9 +716,9 @@
   integrity sha512-rLu3wcBWH4P5q1CGoSSH/i9hrXs7SlbRLkoq9IGuoPYNGQvDJ3pt/wmOM+XgYjIDRMVIdkUWt0RsfzF50JfnCw==
 
 "@grafana/toolkit@next":
-  version "6.4.0-alpha.24"
-  resolved "https://registry.yarnpkg.com/@grafana/toolkit/-/toolkit-6.4.0-alpha.24.tgz#1639e4fd109bc65bdd09404f7156891ab40c074a"
-  integrity sha512-zdmuap92j91zJODO9gRSzMT80IRl5+wcqgwGpTJHbff8uWzStsayheXZFkr3eKA7JrFEXQ1YyFOsBK61J9bC0A==
+  version "6.4.0-alpha.28"
+  resolved "https://registry.yarnpkg.com/@grafana/toolkit/-/toolkit-6.4.0-alpha.28.tgz#d49cefa1a63be00e690cbddad63fc21a545bd94f"
+  integrity sha512-0pIyWq4Dc7ILzNESeX+uEymcrN6cap0JYYrWUJ6M7Cdp1C7tVSvg094jcpn5ZW3P7TnUPezQUZN6907DVjswrg==
   dependencies:
     "@babel/core" "7.4.5"
     "@babel/preset-env" "7.4.5"
@@ -758,6 +758,8 @@
     node-sass "^4.12.0"
     optimize-css-assets-webpack-plugin "^5.0.3"
     ora "^3.4.0"
+    pixelmatch "^5.0.2"
+    pngjs "^3.4.0"
     postcss-flexbugs-fixes "4.1.0"
     postcss-loader "3.0.0"
     postcss-preset-env "6.6.0"
@@ -6802,6 +6804,13 @@ pirates@^4.0.1:
   dependencies:
     node-modules-regexp "^1.0.0"
 
+pixelmatch@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/pixelmatch/-/pixelmatch-5.0.2.tgz#b1349c3b544e20107a4dd7e532b01291946258cd"
+  integrity sha512-b65UpTI40rGFY8QwN6IYuCbpmwAOL6M8d6voX4F3zR99UmDqh7r2QWLxoeHOazBRgEmDUdqNVESDREqFxQS7rQ==
+  dependencies:
+    pngjs "^3.4.0"
+
 pkg-dir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-3.0.0.tgz#2749020f239ed990881b1f71210d51eb6523bea3"
@@ -6820,6 +6829,11 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
   integrity sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
+
+pngjs@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.4.0.tgz#99ca7d725965fb655814eaf65f38f12bbdbf555f"
+  integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
 
 popper.js@^1.14.4:
   version "1.15.0"

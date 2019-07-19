@@ -4,4 +4,7 @@ npm-debug.log
 .vscode
 .rpt2_cache/
 dist/
+ci/
+e2e-results/
+e3e-temp/
 
