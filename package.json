@@ -10,9 +10,12 @@
     "dev": "grafana-toolkit plugin:dev"
   },
   "devDependencies": {
-    "@grafana/ui": "latest",
     "@grafana/data": "latest",
     "@grafana/toolkit": "next",
+    "@grafana/ui": "latest",
     "@types/grafana": "github:CorpGlory/types-grafana.git"
+  },
+  "dependencies": {
+    "yarn.lock": "^0.0.1-security"
   }
 }
