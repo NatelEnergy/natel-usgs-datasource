@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@grafana/ui": "latest",
+    "@grafana/data": "latest",
     "@grafana/toolkit": "next",
     "@types/grafana": "github:CorpGlory/types-grafana.git"
   }
