@@ -21,7 +21,7 @@
       {"name": "Find USGS Sites", "url": "https://maps.waterdata.usgs.gov/mapper/"},
       {
         "name": "Project Page",
-        "url": "https://github.com/NatelEnergy/grafana-usgs-datasource"
+        "url": "https://github.com/NatelEnergy/natel-usgs-datasource"
       },
       {"name": "Natel Energy", "url": "http://www.natelenergy.com/"}
     ],
