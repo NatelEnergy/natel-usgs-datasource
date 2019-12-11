@@ -1,6 +1,6 @@
 {
   "name": "natel-usgs-datasource",
-  "version": "0.0.2-dev",
+  "version": "0.0.3-dev",
   "description": "USGS Waterservices in Grafana",
   "author": "Natel Energy",
   "license": "MIT",
@@ -10,12 +10,9 @@
     "dev": "grafana-toolkit plugin:dev"
   },
   "devDependencies": {
-    "@grafana/data": "latest",
+    "@grafana/data": "next",
     "@grafana/toolkit": "next",
-    "@grafana/ui": "latest",
+    "@grafana/ui": "next",
     "@types/grafana": "github:CorpGlory/types-grafana.git"
-  },
-  "dependencies": {
-    "yarn.lock": "^0.0.1-security"
   }
 }

@@ -17,6 +17,11 @@ https://maps.waterdata.usgs.gov/mapper/
 
 #### Changelog
 
+
+##### v0.0.3 (dev)
+
+* Grafana Toolkit build
+
 ##### v0.0.2
 
 * Moved service to https://nwis.waterservices.usgs.gov/nwis/ (Avoid 301 & error)
