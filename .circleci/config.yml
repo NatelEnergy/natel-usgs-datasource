@@ -110,9 +110,6 @@ workflows:
     - test_6_5_1:
         requires:
         - package
-    - test_6_3_0_beta1:
-        requires:
-        - package
     - report:
         requires:
         - test_6_5_1
