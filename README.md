@@ -40,3 +40,4 @@ https://maps.waterdata.usgs.gov/mapper/
 * Better site selection popup.
 * Somehow annotate the time series variables with their data quality.
 * Auto link the panel to USGS sensor information?
+
